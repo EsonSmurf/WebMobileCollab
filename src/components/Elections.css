@@ -1,0 +1,264 @@
+/* Import shared styles */
+@import './Dashboard.css';
+
+/* Elections specific styles */
+.elections-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.elections-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.create-election-btn {
+  background-color: #0066CC;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.archive-button {
+  background-color: #d3d3d3; /* Light gray */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+
+
+.plus-icon {
+    font-size: 18px;
+    line-height: 1;
+    color: white;
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.elections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.election-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.election-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 1rem 0;
+}
+
+.election-dates {
+    color: #666;
+}
+
+.election-dates p {
+    margin: 0.25rem 0;
+}
+
+.election-stats {
+    display: flex;
+    gap: 3rem;
+    padding: 0 2rem;
+    border-left: 1px solid #E0E0E0;
+    border-right: 1px solid #E0E0E0;
+}
+
+.turnout, .status {
+    text-align: center;
+}
+
+.turnout h4, .status h4 {
+    color: #666;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+}
+
+.turnout span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.status-completed {
+    color: #10B981;
+    font-weight: 500;
+}
+
+.status-upcoming {
+    color: #0066CC;
+    font-weight: 500;
+}
+
+.election-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.edit-btn,
+.delete-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-btn {
+    background-color: #E3F2FD;
+}
+
+.delete-btn {
+    background-color: #FFEBEE;
+}
+
+.edit-btn:hover {
+    background-color: #BBDEFB;
+}
+
+.delete-btn:hover {
+    background-color: #FFCDD2;
+}
+
+.edit-btn img,
+.delete-btn img {
+    width: 16px;
+    height: 16px;
+}
+
+.details-btn {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    color: #0066CC;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.create-election-btn:hover {
+    background-color: #0052A3;
+}
+
+.archive-btn:hover::after {
+    background-color: #0052A3;
+}
+
+.details-btn:hover {
+    color: #0052A3;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+  .election-card {
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+  }
+
+  .election-stats {
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .elections-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .create-election-btn,
+  .archive-btn {
+    width: 48%;
+  }
+
+  .election-card {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .election-stats {
+    border: none;
+    padding: 1rem 0;
+    justify-content: space-between;
+  }
+
+  .election-actions {
+    justify-content: flex-start;
+    padding-top: 1rem;
+    border-top: 1px solid #E0E0E0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .elections-header h2 {
+    font-size: 24px;
+  }
+
+  .election-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .turnout, .status {
+    text-align: left;
+    width: 100%;
+  }
+
+  .election-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 36px;
+    height: 36px;
+  }
+} 

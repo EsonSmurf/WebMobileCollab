@@ -1,0 +1,217 @@
+/* Import shared styles */
+@import './Dashboard.css';
+
+/* Voters specific styles */
+.content-area {
+    padding: 2rem;
+    min-height: calc(100vh - 64px); /* Account for header height */
+    position: relative;
+}
+
+.voters-management {
+    position: relative;
+    width: 100%;
+}
+
+.management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.management-header h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.voters-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    min-height: calc(100vh - 200px); /* Ensure consistent minimum height */
+}
+
+.voters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    height: 40px; /* Fixed height for consistency */
+}
+
+.voters-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.header-actions {
+    position: absolute;
+    right: 0;
+    display: flex;
+    gap: 8px;
+}
+
+.add-btn, .upload-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #0066CC;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    gap: 6px;
+}
+
+.upload-btn img {
+    width: 16px;
+    height: 16px;
+}
+
+.voters-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Ensure table header has fixed height */
+.voters-table thead th {
+    height: 48px;
+    background-color: #F5F5F5;
+    padding: 0 1.5rem;
+    text-align: left;
+    color: #6B7280;
+    font-weight: 500;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+}
+
+/* Ensure table rows have consistent height */
+.voters-table tbody td {
+    height: 56px;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #111827;
+    font-size: 14px;
+}
+
+.status-voted {
+    background-color: #002B5B;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status-not-voted {
+    background-color: #9CA3AF;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-bt {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #E5E7EB;
+}
+
+
+
+.edit-btn img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    gap: 8px;
+    background-color: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+}
+
+.page-info {
+    color: #6B7280;
+    font-size: 14px;
+    margin-right: 16px;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.page-btn {
+    min-width: 32px;
+    height: 32px;
+    border: 1px solid #E5E7EB;
+    background-color: white;
+    border-radius: 6px;
+    color: #374151;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.page-btn.active {
+    background-color: #E5E7EB;
+    border-color: #E5E7EB;
+    color: #374151;
+}
+
+.page-btn:hover:not(.active) {
+    background-color: #F3F4F6;
+}
+
+.next-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.next-btn img {
+    width: 20px;
+    height: 20px;
+} 
