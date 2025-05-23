@@ -26,15 +26,15 @@ const Voters = () => {
     }, [showProfileDropdown]);
 
     const voters = [
-        { name: 'Grace Bayonito', id: '020030291232', program: 'BITS', status: 'Voted' },
-        { name: 'Kurt Papruz', id: '020030291232', program: 'BITS', status: 'Voted' },
-        { name: 'Lei Anysson Marquez', id: '020030291232', program: 'BITS', status: 'Not Voted' },
-        { name: 'Grace Bayonito', id: '020030291232', program: 'BITS', status: 'Voted' },
-        { name: 'Kurt Papruz', id: '020030291232', program: 'BITS', status: 'Voted' },
-        { name: 'Lei Anysson Marquez', id: '020030291232', program: 'BITS', status: 'Not Voted' },
-        { name: 'Grace Bayonito', id: '020030291232', program: 'BITS', status: 'Voted' },
-        { name: 'Kurt Papruz', id: '020030291232', program: 'BITS', status: 'Voted' },
-        { name: 'Lei Anysson Marquez', id: '020030291232', program: 'BITS', status: 'Not Voted' }
+        { name: 'Grace Bayonito', id: '020030291232', program: 'BSIT', status: 'Voted' },
+        { name: 'Kurt Papruz', id: '020030291232', program: 'BSIT', status: 'Voted' },
+        { name: 'Lei Anysson Marquez', id: '020030291232', program: 'BSIT', status: 'Not Voted' },
+        { name: 'Grace Bayonito', id: '020030291232', program: 'BSIT', status: 'Voted' },
+        { name: 'Kurt Papruz', id: '020030291232', program: 'BSIT', status: 'Voted' },
+        { name: 'Lei Anysson Marquez', id: '020030291232', program: 'BSIT', status: 'Not Voted' },
+        { name: 'Grace Bayonito', id: '020030291232', program: 'BSIT', status: 'Voted' },
+        { name: 'Kurt Papruz', id: '020030291232', program: 'BSIT', status: 'Voted' },
+        { name: 'Lei Anysson Marquez', id: '020030291232', program: 'BSIT', status: 'Not Voted' }
     ];
 
     return (
@@ -198,12 +198,16 @@ const Voters = () => {
                                             </td>
                                             <td>
                                                 <div className="action-buttons">
-                                                    <button className="edit-btn" aria-label="Edit">
+                                                   
+                                                    <button className="delete-btn" aria-label="Delete">
                                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M11.13 2.87a1.5 1.5 0 0 1 2.12 2.12l-7.5 7.5-2.5.38.38-2.5 7.5-7.5z" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="#EBF5FF"/>
+                                                            <path d="M2 4H14" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M12.6667 4V13.3333C12.6667 14 12 14.6667 11.3333 14.6667H4.66667C4 14.6667 3.33333 14 3.33333 13.3333V4" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M5.33333 4V2.66667C5.33333 2 6 1.33333 6.66667 1.33333H9.33333C10 1.33333 10.6667 2 10.6667 2.66667V4" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M6.66667 7.33333V11.3333" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M9.33333 7.33333V11.3333" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                         </svg>
                                                     </button>
-                                                   
                                                    
                                                 </div>
                                             </td>

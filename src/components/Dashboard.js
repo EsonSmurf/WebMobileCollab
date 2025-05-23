@@ -26,7 +26,9 @@ const Dashboard = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
   const profileDropdownRef = useRef(null);
+  const notificationDropdownRef = useRef(null);
   const navigate = useNavigate();
 
   // Close dropdown/modal on outside click
@@ -35,8 +37,11 @@ const Dashboard = () => {
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         setShowProfileDropdown(false);
       }
+      if (notificationDropdownRef.current && !notificationDropdownRef.current.contains(event.target)) {
+        setShowNotificationDropdown(false);
+      }
     }
-    if (showProfileDropdown) {
+    if (showProfileDropdown || showNotificationDropdown) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -44,7 +49,7 @@ const Dashboard = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showProfileDropdown]);
+  }, [showProfileDropdown, showNotificationDropdown]);
 
   const electionData = {
     registeredVoters: 100,
@@ -139,9 +144,17 @@ const Dashboard = () => {
           <header className="top-bar">
             <h2 className="school-nme">STI College Balagtas</h2>
             <div className="header-right">
-              <div className="notifications">
+              <div className="notifications" onClick={() => setShowNotificationDropdown(prev => !prev)}>
                 <img src="/icons-notification.png" alt="Notifications" />
               </div>
+              {showNotificationDropdown && (
+                <div ref={notificationDropdownRef} className="notification-dropdown">
+                  <h4>Notifications</h4>
+                  <p>Upcoming election for the Student Government starts on <strong>May 10, 2025 at 10:00AM</strong></p>
+                  <p>Upcoming BITS Organization election starts on <strong>May 5, 2025 at 10:00AM</strong></p>
+                  <a href="/notifications">See all</a>
+                </div>
+              )}
               <div className="user-profile" style={{ position: 'relative' }}>
                 <img
                   src="/icons-profile.png"
