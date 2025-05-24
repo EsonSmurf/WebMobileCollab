@@ -65,7 +65,7 @@ const Candidates = () => {
                 <div className="content-area">
                     <div className="candidates-header">
                         <h2>Candidate Management</h2>
-                        <button className="archive-button">Archive</button>
+                      
                     </div>
 
                     <div className="candidates-container">

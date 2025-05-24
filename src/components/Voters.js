@@ -156,7 +156,7 @@ const Voters = () => {
                     <div className="voters-management">
                     <div className="management-header">
                             <h1>Voters Management</h1>
-                            <button className="archive-button">Archive</button>
+                          
                            
                     </div>
 

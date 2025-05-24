@@ -173,7 +173,7 @@ const Elections = () => {
                     <div className="elections-header">
                         <h2>Election Management</h2>
                         <div class="button-container">
-    <button class="archive-button">Archive</button>
+
     <button class="create-election-btn">Create Election</button>
                         </div>  
                                 
