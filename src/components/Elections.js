@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Elections.css';
-import './Dashboard.css';
 
 const Elections = () => {
     const elections = [
@@ -38,8 +37,14 @@ const Elections = () => {
     const navigate = useNavigate();
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);  
     const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
+    const [showCreateElectionModal, setShowCreateElectionModal] = useState(false);
     const profileDropdownRef = useRef(null);
     const notificationDropdownRef = useRef(null);
+
+    const [electionTitle, setElectionTitle] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [positions, setPositions] = useState([{ position: '', name: '', photo: null }]);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -60,7 +65,24 @@ const Elections = () => {
         };
     }, [showProfileDropdown, showNotificationDropdown]);
 
-        return (
+    const handlePositionChange = (index, field, value) => {
+        const newPositions = [...positions];
+        newPositions[index][field] = value;
+        setPositions(newPositions);
+    };
+
+    const addPosition = () => {
+        setPositions([...positions, { position: '', name: '', photo: null }]);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Logic to handle form submission
+        console.log({ electionTitle, startDate, endDate, positions });
+        setShowCreateElectionModal(false); // Close modal after submission
+    };
+
+    return (
         <div className="dashboard-container">
             <aside className="sidebar">
                 <div className="logo-container">
@@ -189,7 +211,7 @@ const Elections = () => {
                         <h2>Election Management</h2>
                         <div class="button-container">
 
-    <button class="create-election-btn">Create Election</button>
+    <button class="create-election-btn" onClick={() => setShowCreateElectionModal(true)}>Create Election</button>
                         </div>  
                                 
                           

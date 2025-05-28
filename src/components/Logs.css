@@ -504,23 +504,6 @@
   min-height: 100vh;
 }
 
-.top-bar {
-  background: #ffd600;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2.5rem;
-  height: 72px;
-  box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  position: fixed;
-  z-index: 10;
-   top: 0; /* Add this line to position it at the top */
-    left: 230px; /* Optional: to ensure it stays aligned to the left */
-    right: 0;
-  
-  width: 85%;
-}
 
 .school-name {
   font-size: 2rem;

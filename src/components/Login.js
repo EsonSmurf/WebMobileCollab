@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="left-side">
-        <div className="logo-container">
+        <div className="logo-containers">
           <img src="/svs-logo.png" alt="SVS Logo" className="logo" />
           <p className="tagline">Vote Secured! Vote Wisely!</p>
         </div>
@@ -53,7 +53,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             {error && <div className="error-message">{error}</div>}
             <div className="form-group">
-              <label>Email:</label>
+              <labels>Email:</labels>
               <input
                 type="email"
                 name="email"
@@ -63,7 +63,7 @@ const Login = () => {
               />
             </div>
             <div className="form-group">
-              <label>Password:</label>
+              <labels>Password:</labels >
               <div className="password-input-container">
                 <input
                   type={showPassword ? "text" : "password"}
