@@ -144,15 +144,16 @@ const Dashboard = () => {
           <header className="top-bar">
             <h2 className="school-nme">STI College Balagtas</h2>
             <div className="header-right">
-              <div className="notifications" onClick={() => setShowNotificationDropdown(prev => !prev)}>
+              <div className="notifications" onClick={() => setShowNotificationDropdown((prev) => !prev)}>
                 <img src="/icons-notification.png" alt="Notifications" />
               </div>
               {showNotificationDropdown && (
                 <div ref={notificationDropdownRef} className="notification-dropdown">
                   <h4>Notifications</h4>
-                  <p>Upcoming election for the Student Government starts on <strong>May 10, 2025 at 10:00AM</strong></p>
+                  <p>Upcoming election for the Student Government starts on <strong>May 10, 2025 at 10:00AM</strong></p>        
+                  <p>_______________________________________________________</p>
                   <p>Upcoming BITS Organization election starts on <strong>May 5, 2025 at 10:00AM</strong></p>
-                  <a href="/notifications">See all</a>
+         
                 </div>
               )}
               <div className="user-profile" style={{ position: 'relative' }}>

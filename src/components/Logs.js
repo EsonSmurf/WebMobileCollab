@@ -6,15 +6,20 @@ const Logs = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+    const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
     const profileDropdownRef = useRef(null);
+    const notificationDropdownRef = useRef(null);
 
     useEffect(() => {
         function handleClickOutside(event) {
             if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
                 setShowProfileDropdown(false);
             }
+            if (notificationDropdownRef.current && !notificationDropdownRef.current.contains(event.target)) {
+                setShowNotificationDropdown(false);
+            }
         }
-        if (showProfileDropdown) {
+        if (showProfileDropdown || showNotificationDropdown) {
             document.addEventListener('mousedown', handleClickOutside);
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -22,10 +27,10 @@ const Logs = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [showProfileDropdown]);
+    }, [showProfileDropdown, showNotificationDropdown]);
 
     return (
-        <div className="dashboard-container">
+        <div className={`dashboard-container ${showNotificationDropdown ? 'dark-background' : ''}`}>
             {/* Top Bar removed */}
             <aside className="sidebar">
                 <div className="logo-container">
@@ -62,11 +67,95 @@ const Logs = () => {
                 <header className="top-bar">
                 <h2 className="school-nme">STI College Balagtas</h2>
                     <div className="header-right">
-                        <div className="notifications">
-                            <img src="/icons-notification.png" alt="Notifications" />
-                        </div>
-                        <div className="user-profile">
-                            <img src="/icons-profile.png" alt="User Profile" style={{ cursor: 'pointer' }} onClick={() => navigate('/profile')} />
+                    <div className="notifications" onClick={() => setShowNotificationDropdown(prev => !prev)}>
+                <img src="/icons-notification.png" alt="Notifications" />
+              </div>
+              {showNotificationDropdown && (
+                <div ref={notificationDropdownRef} className="notification-dropdown">
+                  <h4>Notifications</h4>
+                  <p>Upcoming election for the Student Government starts on <strong>May 10, 2025 at 10:00AM</strong></p>        
+                  <p>_______________________________________________________</p>
+                  <p>Upcoming BITS Organization election starts on <strong>May 5, 2025 at 10:00AM</strong></p>
+         
+                </div>
+              )}
+                      <div className="user-profile" style={{ position: 'relative' }}>
+                <img
+                  src="/icons-profile.png"
+                  alt="User Profile"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setShowProfileDropdown((prev) => !prev)}
+                />
+                {/* Profile Dropdown */}
+                {showProfileDropdown && (
+                  <div
+                    ref={profileDropdownRef}
+                    style={{
+                      position: 'absolute',
+                      top: '48px',
+                      right: 0,
+                      background: '#fff',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+                      width: '320px',
+                      zIndex: 1000,
+                      padding: '1.5rem 1.5rem 1rem 1.5rem',
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <div style={{
+                        width: '64px',
+                        height: '64px',
+                        borderRadius: '50%',
+                        background: '#E5F0FB',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: '0.5rem',
+                      }}>
+                        <img src="/icons-profile.png" alt="Profile" style={{ width: 40, height: 40 }} />
+                      </div>
+                      <div style={{ fontWeight: 700, fontSize: 22, marginBottom: 0 }}>Jayson Visnar</div>
+                      <div style={{ color: '#888', fontSize: 14, marginBottom: 8 }}>Visnar.302857@Balagtas.sti.edu.ph</div>
+                      <button
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#0066CC',
+                          fontWeight: 500,
+                          fontSize: 15,
+                          marginBottom: 16,
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                        }}
+                        onClick={() => {
+                          setShowProfileDropdown(false);
+                          navigate('/profile');
+                        }}
+                      >
+                        Manage your Student Voting System Account
+                      </button>
+                      <button
+                        style={{
+                          width: '100%',
+                          background: '#0066CC',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: 8,
+                          padding: '12px 0',
+                          fontWeight: 600,
+                          fontSize: 18,
+                          cursor: 'pointer',
+                          marginBottom: 8,
+                        }}
+                        onClick={() => setShowProfileDropdown(false)}
+                      >
+                        Logout
+                        
+                      </button>
+                    </div>
+                  </div>
+                )}
                         </div>
                     </div>
                 </header>

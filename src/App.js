@@ -10,7 +10,6 @@ import Logs from './components/Logs';
 import Results from './components/Results';
 import Profile from './components/Profile';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import AllNotifications from './components/AllNotifications';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -81,7 +80,6 @@ function App() {
                 </ProtectedRoute>
               } 
             />
-            <Route path="/notifications" element={<AllNotifications />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </div>

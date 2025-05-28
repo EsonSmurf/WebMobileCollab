@@ -13,6 +13,11 @@
     margin-bottom: 2rem;
     position: relative;
 }
+.dark-background {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  position: relative; /* Ensure it covers the main content */
+  z-index: 10; /* Ensure it appears above other content */
+}
 
 .management-header h1 {
     font-size: 32px;
@@ -508,11 +513,13 @@
   height: 72px;
   box-sizing: border-box;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  position: relative;
+  position: fixed;
   z-index: 10;
+   top: 0; /* Add this line to position it at the top */
+    left: 230px; /* Optional: to ensure it stays aligned to the left */
+    right: 0;
   
-  
-  width: 100%;
+  width: 85%;
 }
 
 .school-name {
