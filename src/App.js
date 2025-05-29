@@ -11,6 +11,7 @@ import Results from './components/Results';
 import Profile from './components/Profile';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ExportLogs from './components/ExportLogs';
+import ExportResults from './components/ExportResults';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -82,6 +83,7 @@ function App() {
               } 
             />
             <Route path="/export-logs" element={<ExportLogs />} />
+            <Route path="/export-results" element={<ExportResults />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </div>

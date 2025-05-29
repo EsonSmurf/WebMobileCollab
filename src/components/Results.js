@@ -128,6 +128,10 @@ const Results = () => {
         { name: 'Tangol Dalisay', position: 'P.R.O', photo: '/default-avatar.png' }
     ];
 
+    const handleExportClick = () => {
+        navigate('/export-results');
+    };
+
     return (
         <div className="dashboard-container">
             <aside className="sidebar">
@@ -256,7 +260,7 @@ const Results = () => {
                     <div className="results-container">
                         <div className="results-header">
                             <h1>Results & Analytics</h1>
-                            <button className="export-btn">Export</button>
+                            <button onClick={handleExportClick} className="export-btn">Export</button>
                         </div>
 
                         {/* Result per Candidate Section */}

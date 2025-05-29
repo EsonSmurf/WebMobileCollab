@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Change this line
-import './Logs.css'; 
+import jsPDF from 'jspdf';
+
+import './Logs.css'; // Import your existing styles
+
 
 const ExportLogs = () => {
     const [logs, setLogs] = useState([]);
@@ -27,6 +30,7 @@ const ExportLogs = () => {
 
         fetchLogs();
     }, []);
+    
 
     const handleExportLogs = () => {
         setIsLoading(true);
@@ -71,6 +75,7 @@ const ExportLogs = () => {
                         ))}
                     </tbody>
                 </table>
+                
             )}
         </div>
     );
