@@ -3,37 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Elections.css';
 
 const Elections = () => {
-    const elections = [
-        {
-            title: "Student Government Election",
-            startDate: "April 26, 2025",
-            endDate: "April 30, 2025",
-            turnout: "-",
-            status: "Upcoming"
-        },
-        {
-            title: "Student Government Election",
-            startDate: "October 1, 2024",
-            endDate: "October 3, 2024",
-            turnout: "85%",
-            status: "Completed"
-        },
-        {
-            title: "Student Government Election",
-            startDate: "April 26, 2025",
-            endDate: "April 30, 2025",
-            turnout: "-",
-            status: "Upcoming"
-        },
-        {
-            title: "Student Government Election",
-            startDate: "October 1, 2024",
-            endDate: "October 3, 2024",
-            turnout: "75%",
-            status: "Completed"
-        }
-    ];
-
+    const [elections, setElections] = useState([]);
     const navigate = useNavigate();
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);  
     const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
@@ -45,6 +15,10 @@ const Elections = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [positions, setPositions] = useState([{ position: '', name: '', photo: null }]);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+    const [editIndex, setEditIndex] = useState(null);
+    const [selectedElection, setSelectedElection] = useState(null);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -77,9 +51,109 @@ const Elections = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logic to handle form submission
-        console.log({ electionTitle, startDate, endDate, positions });
+        
+        // Reset error message
+        setErrorMessage('');
+
+        // Get today's date
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+
+        // Check if start date is in the past
+        if (new Date(startDate) < today) {
+            setErrorMessage('Start date cannot be in the past.');
+            return; // Prevent form submission
+        }
+
+        // Check if end date is before start date
+        if (new Date(endDate) < new Date(startDate)) {
+            setErrorMessage('End date cannot be before start date.');
+            return; // Prevent form submission
+        }
+
+        const newElection = {
+            title: electionTitle,
+            startDate: startDate,
+            endDate: endDate,
+            turnout: "-", // Default value
+            status: "Upcoming" // Default status
+        };
+
+        if (isEditing) {
+            // Update the existing election
+            setElections((prevElections) => {
+                const updatedElections = [...prevElections];
+                updatedElections[editIndex] = newElection; // Update the specific election
+                return updatedElections;
+            });
+            setIsEditing(false); // Reset editing state
+        } else {
+            // Add a new election
+            setElections((prevElections) => [...prevElections, newElection]);
+        }
+
+        // Logic to handle form submission to the database (Laravel)
+        submitToDatabase(newElection);
         setShowCreateElectionModal(false); // Close modal after submission
+    };
+
+    const submitToDatabase = async (newElection) => {
+        try {
+            const response = await fetch('/api/elections', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newElection),
+            });
+            const data = await response.json();
+            console.log('Election created:', data);
+        } catch (error) {
+            console.error('Error creating election:', error);
+        }
+    };
+
+    const handleDeleteElection = (index) => {
+        // Logic to delete from the database (Laravel)
+        // Use fetch or axios to send a delete request
+
+        // Update the state to remove the election
+        setElections((prevElections) => prevElections.filter((_, i) => i !== index));
+    };
+
+    const handleEditElection = (index) => {
+        const electionToEdit = elections[index];
+        setElectionTitle(electionToEdit.title);
+        setStartDate(electionToEdit.startDate);
+        setEndDate(electionToEdit.endDate);
+        setEditIndex(index);
+        setIsEditing(true);
+        setShowCreateElectionModal(true); // Open the modal for editing
+    };
+
+    const closeModal = () => {
+        setShowCreateElectionModal(false);
+        setElectionTitle('');
+        setStartDate('');
+        setEndDate('');
+        setPositions([{ position: '', name: '', photo: null }]);
+        setIsEditing(false); // Reset editing state
+    };
+
+    const handleViewDetails = async (index) => {
+        const electionDetails = elections[index];
+        await fetchElectionDetails(electionDetails.id); // Assuming each election has a unique ID
+        setSelectedElection(electionDetails);
+    };
+
+    const fetchElectionDetails = async (id) => {
+        try {
+            const response = await fetch(`/api/elections/${id}`); // Adjust the endpoint as needed
+            const data = await response.json();
+            setSelectedElection(data); // Set the fetched data to state
+        } catch (error) {
+            console.error('Error fetching election details:', error);
+        }
     };
 
     return (
@@ -209,16 +283,87 @@ const Elections = () => {
                 <div className="content-area">
                     <div className="elections-header">
                         <h2>Election Management</h2>
-                        <div class="button-container">
-
-    <button class="create-election-btn" onClick={() => setShowCreateElectionModal(true)}>Create Election</button>
-                        </div>  
-                                
-                          
-                        <div className="header-actions">
-                           
-                        </div>
+                        <button className="create-election-btn" onClick={() => setShowCreateElectionModal(true)}>Create Election</button>
                     </div>
+
+                    {/* Create Election Modal */}
+                    {showCreateElectionModal && (
+                        <div className="modal">
+                            <div className="modal-content">
+                                <h2>Create Election</h2>
+                                <form onSubmit={handleSubmit}>
+                                    <label>
+                                        Election Title:
+                                        <input
+                                            type="text"
+                                            value={electionTitle}
+                                            onChange={(e) => setElectionTitle(e.target.value)}
+                                            required
+                                        />
+                                    </label>
+                                    <label>
+                                        Start Date:
+                                        <input
+                                            type="date"
+                                            value={startDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                            required
+                                        />
+                                    </label>
+                                    <label>
+                                        End Date:
+                                        <input
+                                            type="date"
+                                            value={endDate}
+                                            onChange={(e) => setEndDate(e.target.value)}
+                                            required
+                                        />
+                                    </label>
+                                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                                    {positions.map((pos, index) => (
+                                        <div key={index} className="position-row">
+                                            <label>
+                                                Position:
+                                                <select
+                                                    value={pos.position}
+                                                    onChange={(e) => handlePositionChange(index, 'position', e.target.value)}
+                                                    required
+                                                >
+                                                    <option value="">Select Position</option>
+                                                    <option value="President">President</option>
+                                                    <option value="Vice President">Vice President</option>
+                                                    {/* Add more positions as needed */}
+                                                </select>
+                                            </label>
+                                            <label>
+                                                Name:
+                                                <input
+                                                    type="text"
+                                                    value={pos.name}
+                                                    onChange={(e) => handlePositionChange(index, 'name', e.target.value)}
+                                                    required
+                                                />
+                                            </label>
+                                            <label>
+                                                Photo:
+                                                <input
+                                                    type="file"
+                                                    onChange={(e) => handlePositionChange(index, 'photo', e.target.files[0])}
+                                                    required
+                                                />
+                                            </label>
+                                        </div>
+                                    ))}
+
+                                    <button type="button" onClick={addPosition}>+ Add Position</button>
+                                    <div className="form-actions">
+                                        <button type="submit">Create Election</button>
+                                        <button type="button" onClick={closeModal}>Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="elections-list">
                         {elections.map((election, index) => (
@@ -243,33 +388,50 @@ const Elections = () => {
                                     </div>
                                 </div>
                                 <div className="election-actions">
-                                    <button className="edit-btn" aria-label="Edit">
+                                    <button className="edit-btn" aria-label="Edit" onClick={() => handleEditElection(index)}>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.13 2.87a1.5 1.5 0 0 1 2.12 2.12l-7.5 7.5-2.5.38.38-2.5 7.5-7.5z" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="#EBF5FF"/>
                                         </svg>
                                     </button>
-                                    <button className="delete-btn" aria-label="Delete">
+                                    <button className="delete-btn" aria-label="Delete" onClick={() => handleDeleteElection(index)}>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2 4H14" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M12.6667 4V13.3333C12.6667 14 12 14.6667 11.3333 14.6667H4.66667C4 14.6667 3.33333 14 3.33333 13.3333V4" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M5.33333 4V2.66667C5.33333 2 6 1.33333 6.66667 1.33333H9.33333C10 1.33333 10.6667 2 10.6667 2.66667V4" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M6.66667 7.33333V11.3333" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M9.33333 7.33333V11.3333" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M2 4H14" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M12.6667 4V13.3333C12.6667 14 12 14.6667 11.3333 14.6667H4.66667C4 14.6667 3.33333 14 3.33333 13.3333V4" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M5.33333 4V2.66667C5.33333 2 6 1.33333 6.66667 1.33333H9.33333C10 1.33333 10.6667 2 10.6667 2.66667V4" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M6.66667 7.33333V11.3333" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M9.33333 7.33333V11.3333" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                     </button>
-                                    <button className="details-btn">See details</button>
-                                </div>
-                                <div className="modal-container">
-
+                                    <button className="details-btn" onClick={() => handleViewDetails(index)}>See details</button>
                                 </div>
                             </div>
-
-                            
                         ))}
-                            
                     </div>
                 </div>
             </main>
+
+            {selectedElection && (
+                <DetailsModal 
+                    election={selectedElection} 
+                    onClose={() => setSelectedElection(null)} 
+                />
+            )}
+        </div>
+    );
+};
+
+const DetailsModal = ({ election, onClose }) => {
+    return (
+        <div className="modal">
+            <div className="modal-content">
+                <h2>{election.title}</h2>
+                <p>Start Date: {election.startDate}</p>
+                <p>End Date: {election.endDate}</p>
+                <p>Turnout %: {election.turnout}</p>
+                <p>Status: {election.status}</p>
+                {/* Add more details as needed */}
+                <button onClick={onClose}>Close</button>
+            </div>
         </div>
     );
 };

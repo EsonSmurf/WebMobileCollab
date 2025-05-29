@@ -9,6 +9,7 @@ const Logs = () => {
     const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
     const profileDropdownRef = useRef(null);
     const notificationDropdownRef = useRef(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -29,8 +30,16 @@ const Logs = () => {
         };
     }, [showProfileDropdown, showNotificationDropdown]);
 
+    const handleExportLogs = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            navigate('/export-logs');
+            setIsLoading(false); // Reset loading state after navigation
+        }, 800); // 0.8 seconds
+    };
+
     return (
-        <div className={`dashboard-container ${showNotificationDropdown ? 'dark-background' : ''}`}>
+        <div className="dashboard-container">
             {/* Top Bar removed */}
             <aside className="sidebar">
                 <div className="logo-container">
@@ -162,7 +171,9 @@ const Logs = () => {
             <div className="content-area">
             <div className="elections-header">
             <h2>Logs</h2>
-                    <button className="export-logs-btn">Export Logs</button>
+                    <button onClick={handleExportLogs} className="export-logs-btn" disabled={isLoading}>
+                        {'Export Logs'}
+                    </button>
                 </div>
                 <div className="logs-cards-container">
                     {/* Audit Log Card */}
