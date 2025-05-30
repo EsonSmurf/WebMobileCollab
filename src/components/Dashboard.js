@@ -144,7 +144,7 @@ const Dashboard = () => {
           <header className="top-bar">
             <h2 className="school-nme">STI College Balagtas</h2>
             <div className="header-right">
-              <div className="notifications" onClick={() => setShowNotificationDropdown((prev) => !prev)}>
+              <div className="notifications" onClick={() => setShowNotificationDropdown(prev => !prev)}>
                 <img src="/icons-notification.png" alt="Notifications" />
               </div>
               {showNotificationDropdown && (
